@@ -3,8 +3,8 @@
  */
 package hsbclearn.simpleapp;
 
-import java.util.ArrayList;
-import java.util.List;
+
+
 
 /**
  * @author GZGRAJ
@@ -12,18 +12,26 @@ import java.util.List;
  */
 public class DataInput {
 	
-	List<Integer> m_DPValues = new ArrayList<Integer>();
-	//IIntegerWrapper m_Values;
+	
+	IntegerWrapper m_InOutValues = new IntegerWrapper();
+	
 	DataInput()
 	{
-		
+		initValues();
 	}
-	public void initValues( IIntegerWrapper Values)
+	public void initValues()
 	{
-		m_DPValues =  Values.getRawData();
+		m_InOutValues.add(1);
+		m_InOutValues.add(5);
+		m_InOutValues.add(3);
+		m_InOutValues.add(3);
+		m_InOutValues.add(2);
+		m_InOutValues.add(4);
 	}
-	public List<Integer> getValues()
+	public IntegerWrapper getValues()
 	{
-		return m_DPValues;
+		return  m_InOutValues;
 	}
+	
+	
 }

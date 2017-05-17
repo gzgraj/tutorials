@@ -1,30 +1,23 @@
 package hsbclearn.simpleapp;
 
-import java.util.Set;
-import java.util.TreeSet;
+
+
 
 public class App { 
 
 	public static void main(String[] args) {
         System.out.println( "Hello World!" );
-         IntegerWrapper OurRawData = new IntegerWrapper();
-         DataInput OurData = new DataInput();
-         
-         OurData.initValues(OurRawData);
         
-		for (Integer tmp : OurData.getValues() )
-        	 System.out.println(tmp); 
+        DataInput inOutData = new DataInput();  // Z zainicjowaniem tymczasowo w konstruktorze
+        DataProcessor dataProcessor = new DataProcessor();
+        DataOutput dataOutput = new DataOutput();
+        System.out.println( "----- original data -----------" );
+        dataOutput.print(inOutData.getValues());
+        dataProcessor.Run(inOutData.getValues());
+		System.out.println( "----- after processing -----------" );
+		dataOutput.print(inOutData.getValues());
 		
-		 System.out.println( "----------------" );
-		 Set <Integer> ts = new TreeSet <Integer>();
-	     
-		 for (Integer tmp : OurData.getValues() )
-			 ts.add(tmp);
-	     
 	      
-	      for (Integer tmp : ts )
-	        	 System.out.println(tmp); 
-	      
-    }
+	}
 	
 }
