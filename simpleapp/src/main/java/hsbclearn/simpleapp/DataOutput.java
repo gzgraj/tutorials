@@ -3,18 +3,16 @@
  */
 package hsbclearn.simpleapp;
 
-import java.util.Iterator;
+import java.util.List;
 
-/**
- * @author GZGRAJ
- *
- */
-public class DataOutput {
 
-	void print(IntegerWrapper iData)
-	{
-		Iterator<Integer> tmp = iData.iterator();
-		while (tmp.hasNext()) 
-			System.out.println(tmp.next());
+import hsbclearn.simpleapp.IntegerWrapper;
+
+public class DataOutput implements IDataOutput {
+
+	@Override
+	public void writeData(List<IntegerWrapper> data) {
+		System.out.println(data);
 	}
+
 }

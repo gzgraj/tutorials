@@ -1,23 +1,17 @@
 package hsbclearn.simpleapp;
 
-
-
+import java.util.List;
 
 public class App { 
 
 	public static void main(String[] args) {
-        System.out.println( "Hello World!" );
+        IDataInput input = new DataInput();
+        List<IntegerWrapper> data = input.getData();        
         
-        DataInput inOutData = new DataInput();  // Z zainicjowaniem tymczasowo w konstruktorze
-        DataProcessor dataProcessor = new DataProcessor();
-        DataOutput dataOutput = new DataOutput();
-        System.out.println( "----- original data -----------" );
-        dataOutput.print(inOutData.getValues());
-        dataProcessor.Run(inOutData.getValues());
-		System.out.println( "----- after processing -----------" );
-		dataOutput.print(inOutData.getValues());
-		
-	      
-	}
-	
+        IDataProcessor processor = new DataProcessor();
+        List<IntegerWrapper> processedData = processor.processData(data);
+        
+        IDataOutput output = new DataOutput();
+        output.writeData(processedData);        
+    }
 }

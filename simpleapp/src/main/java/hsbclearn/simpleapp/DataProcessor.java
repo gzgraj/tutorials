@@ -4,54 +4,38 @@
 package hsbclearn.simpleapp;
 
 
-import java.util.Iterator;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import java.util.TreeSet;
 
-/**
- * @author GZGRAJ
- *
- */
-public class DataProcessor {
-	Set <Integer> m_OrderedUniqueData = new TreeSet <Integer>();
-	DataProcessor()
-	{
-		// tu dać  m_OrderedUniqueData = new TreeSet <Integer>(); 
+import hsbclearn.simpleapp.IDataProcessor;
+import hsbclearn.simpleapp.IntegerWrapper;
+
+public class DataProcessor implements IDataProcessor {
+
+	@Override
+	public List<IntegerWrapper> processData(List<IntegerWrapper> data) {
+		List<IntegerWrapper> result = new ArrayList<IntegerWrapper>();
+
+		TreeSet<IntegerWrapper> sortedUnique = new TreeSet<IntegerWrapper>(data);
+		result.addAll(sortedUnique);
+		
+		Integer sum = sum(result);
+		result.add(new IntegerWrapper(sum));
+				
+		
+		return result;
 	}
-	/**
-	 * Buduje posortowaną bez duplikatów
-	 *
-	 */
-	void buildOrderedUnique(IntegerWrapper iData)
-	{
-		Iterator<Integer> tmp = iData.iterator();
-		tmp = iData.iterator();
-		while (tmp.hasNext()) 
-		{
-			m_OrderedUniqueData.add(tmp.next());
+	
+	private Integer sum(Collection<IntegerWrapper> data) {
+		Integer result = 0;
+		
+		for(IntegerWrapper i : data) {
+			result += i.getData();
 		}
 		
+		return result;
 	}
 
-	/**
-	 * Przepisuje  posortowaną bez duplikatów do zwykłej i dodaje sumę
-	 *
-	 */
-	void buildCompleteResult(IntegerWrapper iData)
-	{
-		int sum = 0;
-		iData.getRawData().clear();
-		for (Integer tmp: m_OrderedUniqueData )
-		{
-			sum += tmp;
-			iData.add(tmp);
-		}
-		iData.add(sum);
-		
-	}
-	void Run( IntegerWrapper iData)
-	{
-		buildOrderedUnique(iData);
-		buildCompleteResult(iData);
-	}	
 }

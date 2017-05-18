@@ -1,49 +1,56 @@
-/**
- * 
- */
+
 package hsbclearn.simpleapp;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+public class IntegerWrapper implements Comparable<IntegerWrapper> {
+	
+	private Integer data;		
+	
+	public IntegerWrapper(Integer data) {
+		this.data = data;
+	}	
+	
+	public Integer getData() {
+		return data;
+	}	
 
-/**
- * @author GZGRAJ
- *
- */
-public class IntegerWrapper implements Iterable <Integer>{
-	//Integer[] m_IOValues = {1,5,5,3,2,4}; // ch..
-	List<Integer> m_IOValues = new ArrayList<Integer>();
-	
-	IntegerWrapper()
-	{
-		/*m_IOValues.add(1);
-		m_IOValues.add(5);
-		m_IOValues.add(3);
-		m_IOValues.add(3);
-		m_IOValues.add(2);
-		m_IOValues.add(4);*/
+	public void setData(Integer data) {
+		this.data = data;
 	}
 	
-	void print()
-	{
-		for (Integer tmp : m_IOValues)
-        	 System.out.println(tmp); 
-		
-	}
-	public List<Integer> getRawData() {
-		
-		return m_IOValues;
-	}
-	
-	public void add(Integer elem) {
-		m_IOValues.add(elem);
-		
-	}
 	@Override
-	public Iterator<Integer> iterator() {
+	public int compareTo(IntegerWrapper o) {
+		return data.compareTo(o.data);
+	}	
+
+	@Override
+	public String toString() {
 		
-		return m_IOValues.iterator();
+		return "IntegerWrapper [data=" + data + "]";
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		//result = prime * result + ((data == null) ? 0 : data.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		IntegerWrapper other = (IntegerWrapper) obj;
+		if (data == null) {
+			if (other.data != null)
+				return false;
+		} else if (!data.equals(other.data))
+			return false;
+		return true;
+	}
+		
 }
