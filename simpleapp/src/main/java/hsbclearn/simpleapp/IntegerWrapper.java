@@ -5,6 +5,7 @@ public class IntegerWrapper implements Comparable<IntegerWrapper> {
 	
 	private Integer data;		
 	
+	//public IntegerWrapper() {}
 	public IntegerWrapper(Integer data) {
 		this.data = data;
 	}	

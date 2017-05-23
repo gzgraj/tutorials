@@ -1,7 +1,7 @@
 /**
  * 
  */
-package hsbclearn.simpleapp;
+package hsbclearn.simpleapp.input;
 
 import java.util.ArrayList;
 import java.util.List;
