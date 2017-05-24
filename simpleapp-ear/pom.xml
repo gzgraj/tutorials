@@ -22,7 +22,8 @@
 					<modules>
 						<webModule>
 							<groupId>hsbclearn</groupId>
-							<artifactId>simpleapp</artifactId>
+							<artifactId>simpleapp-war</artifactId>
+ 							<contextRoot>/simpleapp</contextRoot>							
 						</webModule>
 					</modules>
 					<generateApplicationXml>true</generateApplicationXml>
@@ -37,8 +38,14 @@
 			<groupId>hsbclearn</groupId>
 			<artifactId>simpleapp</artifactId>
 			<version>0.1</version>
-			<type>war</type>
+			<type>jar</type>
 		</dependency>
+		<dependency>
+			<groupId>hsbclearn</groupId>
+			<artifactId>simpleapp-war</artifactId>
+			<version>0.1</version>
+			<type>war</type>
+		</dependency>		
 	</dependencies>
 
 	<parent>

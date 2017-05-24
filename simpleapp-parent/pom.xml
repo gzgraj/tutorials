@@ -8,7 +8,8 @@
 
 	<modules>
 		<module>../simpleapp</module>
-		<module>../simpleapp-ear</module>
+		<module>../simpleapp-war</module>		
+		<module>../simpleapp-ear</module>		
 	</modules>
 
 	<build>
