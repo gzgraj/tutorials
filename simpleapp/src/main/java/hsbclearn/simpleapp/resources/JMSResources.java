@@ -12,6 +12,7 @@ public class JMSResources {
 
 	public void init() {
 		try {
+			System.out.println("JMSResources::init()");
 			Context ctx = new InitialContext();
 			connFactory = (ConnectionFactory) ctx.lookup("jms/simpleAppConnectionFactory");
 			String admDestName = "jms/SimpleAppDefaultQueue";

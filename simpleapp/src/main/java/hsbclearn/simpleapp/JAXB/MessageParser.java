@@ -9,13 +9,19 @@ package hsbclearn.simpleapp.JAXB;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.StringReader;
+import java.io.StringWriter;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
@@ -23,50 +29,52 @@ import javax.xml.stream.events.XMLEvent;
 
 import hsbclearn.simpleapp.IMessageParser;
 import hsbclearn.simpleapp.IntegerWrapper;
-//@XmlRootElement
-@XmlRootElement(name="IntegerWrapper") // tu cie mam
+import hsbclearn.simpleapp.XMLMessage;
+
 public class MessageParser implements IMessageParser {
-	public static class User {
+	
+	
 
-        @XmlElement(name="Number")
-        private List<Integer> numbers;
-
-        public List<Integer> getNumbers() {
-            return numbers;
-        }
-
-    }
-	@XmlElement
-	private User Numbers;
-	public User getNumbersNode() {
-	        return Numbers;
-	    }
+   
 	@Override
 	public String saveAsXML(List<IntegerWrapper> inList) {
-		// bzdety
-		return null;
+		
+		XMLMessage numbers = new XMLMessage();
+		StringWriter stringWriter = new StringWriter();
+		numbers.setList(inList);
+		
+		JAXBContext context;
+		try {
+			context = JAXBContext.newInstance(XMLMessage.class);
+			Marshaller m = context.createMarshaller();
+	        m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+	        //m.marshal(numbers, System.out);
+	        m.marshal(numbers, stringWriter);
+		} catch (JAXBException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        
+		return stringWriter.toString();
 	}
 
 	@Override
 	public List<IntegerWrapper> readXML(String xml) {
 		
-		List<IntegerWrapper> resultList = new ArrayList<IntegerWrapper>();
-		List<Integer> tmpList = new ArrayList<Integer>();
-		File inputFile = new File(xml);
+		
+		//File inputFile = new File(xml);
+		XMLMessage numbers = null;
+	
 		try {
-			MessageParser access =  (MessageParser) JAXBContext.newInstance(MessageParser.class).createUnmarshaller().unmarshal(inputFile);
-			tmpList = access.getNumbersNode().getNumbers();
-			//resultList.addAll(access.getNumbersNode().getNumbers());
-			for (Integer nn : tmpList) {
-				resultList.add(new IntegerWrapper(nn)); // jak to zrobić na jednej liście
-				//System.out.println(nn);
-			}
+			//numbers =  (XMLMessage) JAXBContext.newInstance(XMLMessage.class).createUnmarshaller().unmarshal(inputFile);
+			numbers =  (XMLMessage) JAXBContext.newInstance(XMLMessage.class).createUnmarshaller().unmarshal(new StringReader(xml));
+			
 		} catch (JAXBException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
-		return resultList;
+		return numbers.getList();
 	}
 
 	

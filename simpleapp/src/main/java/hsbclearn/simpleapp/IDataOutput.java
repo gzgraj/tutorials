@@ -7,5 +7,5 @@ import java.util.List;
 import java.util.List;
 
 public interface IDataOutput {
-	void writeData(List<IntegerWrapper> data);
+	String writeData(List<IntegerWrapper> data);
 }

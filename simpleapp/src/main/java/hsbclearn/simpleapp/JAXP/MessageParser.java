@@ -36,7 +36,7 @@ public class MessageParser extends DefaultHandler implements IMessageParser {
 	         SAXParserFactory factory = SAXParserFactory.newInstance();
 	         SAXParser saxParser = factory.newSAXParser();
 	         DefaultHandler userhandler = this ;//new UserHandler();
-	         /* inline
+	         /* klasa anonimowa
 	         DefaultHandler userhandler2 = new DefaultHandler(){ public void startElement(String uri, 
 	        		   String localName, String qName, Attributes attributes)
 	        				      throws SAXException { System.out.println(qName); }};

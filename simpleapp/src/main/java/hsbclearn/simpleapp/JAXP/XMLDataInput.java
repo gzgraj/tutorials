@@ -15,4 +15,10 @@ public class XMLDataInput implements IDataInput {
 		return msgParser.readXML(filename);
 	}
 
+	@Override
+	public String getDataAsString() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

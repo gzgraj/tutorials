@@ -21,8 +21,25 @@ public class MessageParser implements IMessageParser {
 
 	@Override
 	public String saveAsXML(List<IntegerWrapper> inList) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"+
+		"<IntegerWrapper>"+
+		"<Numbers>"+
+		"	<Number>1</Number><Number>3</Number>"+
+		"	<Number>21</Number>"+
+		"	<Number>10</Number>"+
+		"	<Number>5</Number>"+
+		"	<Number>9</Number>"+
+		"	<Number>18</Number>"+
+		"	<Number>22</Number>"+
+		"	<Number>221</Number>"+
+		"	<Number>300</Number>"+
+		"</Numbers>"+
+		"<FakeNumbers>"+
+		"<Number>66</Number>"+
+		"	<Number>666</Number>"+
+		"</FakeNumbers>"+
+	"</IntegerWrapper>";
 	}
 
 	@Override

@@ -24,4 +24,10 @@ public class DataInput implements IDataInput {
 		 return result;
 	}
 
+	@Override
+	public String getDataAsString() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
