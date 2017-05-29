@@ -13,7 +13,8 @@
 		<groupId>hsbclearn</groupId>
 		<artifactId>simpleapp-parent</artifactId>
 		<version>0.1</version>
-	</parent>
+		<relativePath>../simpleapp-parent/pom.xml</relativePath>
+	</parent> 
 	
 	<dependencies>
 		<dependency>
