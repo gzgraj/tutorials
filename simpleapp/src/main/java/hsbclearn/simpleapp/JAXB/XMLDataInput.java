@@ -5,6 +5,9 @@ import java.io.FileNotFoundException;
 import java.net.URL;
 import java.util.List;
 
+import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.Dependent;
+import javax.enterprise.context.RequestScoped;
 import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
@@ -16,6 +19,8 @@ import hsbclearn.simpleapp.IDataOutput;
 import hsbclearn.simpleapp.IMessageParser;
 import hsbclearn.simpleapp.IntegerWrapper;
 
+@XmlInputOutput
+@Dependent
 public class XMLDataInput implements IDataInput {
 
 	@Override

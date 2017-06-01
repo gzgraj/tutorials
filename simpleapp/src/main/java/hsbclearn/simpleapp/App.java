@@ -3,8 +3,11 @@ package hsbclearn.simpleapp;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.enterprise.context.ApplicationScoped;
+
 import hsbclearn.simpleapp.JAXB.XMLDataInput;
 import hsbclearn.simpleapp.JAXB.XMLDataOutput;
+//import hsbclearn.simpleapp.examples.jmsInputOutput;
 //import hsbclearn.simpleapp.StAX.XMLDataInput;
 //import hsbclearn.simpleapp.JAXP.XMLDataInput;
 import hsbclearn.simpleapp.input.DataInput;
@@ -18,7 +21,7 @@ public class App {
        IDataInput input = new XMLDataInput();
        List<IntegerWrapper> data = input.getData();   
  
-       
+      System.out.println("aaa");
         //IDataProcessor processor = new DataProcessor();
        IDataProcessor processor = new IncrementalDataProcessor();
        List<IntegerWrapper> processedData = processor.processData(data);

@@ -5,6 +5,8 @@ package hsbclearn.simpleapp.examples;
 
 import java.util.List;
 
+import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.Dependent;
 import javax.jms.Connection;
 import javax.jms.ConnectionFactory;
 import javax.jms.JMSException;
@@ -22,6 +24,8 @@ import hsbclearn.simpleapp.IntegerWrapper;
 import hsbclearn.simpleapp.JAXB.MessageParser;
 import hsbclearn.simpleapp.resources.JMSResources;
 
+@JmsInputOutput
+@Dependent
 public class JMSDataOutput implements IDataOutput {
 
 	JMSResources jmsRes;

@@ -3,6 +3,7 @@ package hsbclearn.simpleapp.examples;
 import java.io.IOException;
 import java.util.List;
 
+import javax.inject.Inject;
 import javax.jms.JMSException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,6 +11,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+//import example.cdi.app.GUIContoller;
+import hsbclearn.simpleapp.examples.XMLProcessController;
 import hsbclearn.simpleapp.IDataInput;
 import hsbclearn.simpleapp.IDataOutput;
 import hsbclearn.simpleapp.IDataProcessor;
@@ -23,19 +26,22 @@ import hsbclearn.simpleapp.output.DataOutput;
 public class ExampleServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
-
+	@Inject
+	XMLProcessController executor;
 	public ExampleServlet() {
         super();
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		JMSDataOutput jmsOut = new JMSDataOutput();
-		JMSDataInput jmsIn = new JMSDataInput();
+		/*BEZ CDI
+		IDataOutput jmsOut = new JMSDataOutput();
+		
+		//JMSDataInput jmsIn = new JMSDataInput();
+		IDataInput jmsIn = new JMSDataInput();
 		IDataOutput consoleOut = new DataOutput();
 		IDataInput input = new XMLDataInput();
 		IDataProcessor processor = new IncrementalDataProcessor();
 		
-        List<IntegerWrapper> data = input.getData(); 
         System.out.println("Wysyłam...");
         jmsOut.writeData(processor.processData(input.getData()));
        
@@ -45,6 +51,14 @@ public class ExampleServlet extends HttpServlet {
 		
 		response.getWriter()
 		.append("Served at ala ma kota i psa 5: ")
+		.append(request.getContextPath());
+		*/
+		
+		System.out.println("Run...");
+		executor.run();
+		System.out.println("After Run...");
+		response.getWriter()
+		.append(executor.getdataReaded())
 		.append(request.getContextPath());
 	}
 
