@@ -2,7 +2,6 @@ package hsbclearn.simpleapp;
 
 import java.util.List;
 
-import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.RequestScoped;
 @RequestScoped
 public class IncrementalDataProcessor implements IDataProcessor {

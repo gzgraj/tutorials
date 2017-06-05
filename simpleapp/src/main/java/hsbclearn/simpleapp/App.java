@@ -1,22 +1,15 @@
 package hsbclearn.simpleapp;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import javax.enterprise.context.ApplicationScoped;
 
 import hsbclearn.simpleapp.JAXB.XMLDataInput;
 import hsbclearn.simpleapp.JAXB.XMLDataOutput;
-//import hsbclearn.simpleapp.examples.jmsInputOutput;
-//import hsbclearn.simpleapp.StAX.XMLDataInput;
-//import hsbclearn.simpleapp.JAXP.XMLDataInput;
-import hsbclearn.simpleapp.input.DataInput;
-import hsbclearn.simpleapp.output.DataOutput;
 
 @SuppressWarnings("unused")
 public class App { 
 
 	public static void main(String[] args) {
+
       // IDataInput input = new DataInput();
        IDataInput input = new XMLDataInput();
        List<IntegerWrapper> data = input.getData();   

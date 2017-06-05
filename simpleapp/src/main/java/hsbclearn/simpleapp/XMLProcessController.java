@@ -1,4 +1,4 @@
-package hsbclearn.simpleapp.examples;
+package hsbclearn.simpleapp;
 
 import java.io.Serializable;
 
@@ -15,9 +15,11 @@ import hsbclearn.simpleapp.IDataProcessor;
 import hsbclearn.simpleapp.IncrementalDataProcessor;
 import hsbclearn.simpleapp.JAXB.XMLDataInput;
 import hsbclearn.simpleapp.JAXB.XmlInputOutput;
+import hsbclearn.simpleapp.JMS.JmsInputOutput;
+
 //@ApplicationScoped
 //@RequestScoped
-@Default
+//@Default
 @Dependent
 public class XMLProcessController implements Serializable{
 	/**

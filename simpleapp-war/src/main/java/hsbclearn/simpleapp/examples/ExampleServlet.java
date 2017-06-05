@@ -10,17 +10,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
+import hsbclearn.simpleapp.XMLProcessController;
 //import example.cdi.app.GUIContoller;
-import hsbclearn.simpleapp.examples.XMLProcessController;
-import hsbclearn.simpleapp.IDataInput;
-import hsbclearn.simpleapp.IDataOutput;
-import hsbclearn.simpleapp.IDataProcessor;
-import hsbclearn.simpleapp.IncrementalDataProcessor;
-import hsbclearn.simpleapp.IntegerWrapper;
-import hsbclearn.simpleapp.JAXB.XMLDataInput;
-//import hsbclearn.simpleapp.input.DataInput;
-import hsbclearn.simpleapp.output.DataOutput;
+
+
 
 @WebServlet("/ExampleServlet")
 public class ExampleServlet extends HttpServlet {
@@ -54,6 +47,13 @@ public class ExampleServlet extends HttpServlet {
 		.append(request.getContextPath());
 		*/
 		
+		System.out.println("wwwwqqqqCzekam...");
+		try {
+			Thread.sleep(10000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		System.out.println("Run...");
 		executor.run();
 		System.out.println("After Run...");

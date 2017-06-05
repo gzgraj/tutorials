@@ -9,6 +9,8 @@ public class JMSResources {
 
 	private ConnectionFactory connFactory;
 	private Queue defaultQueue;
+	private Queue responseQueue;
+	private Queue requestQueue;
 
 	public void init() {
 		try {
@@ -17,6 +19,10 @@ public class JMSResources {
 			connFactory = (ConnectionFactory) ctx.lookup("jms/simpleAppConnectionFactory");
 			String admDestName = "jms/SimpleAppDefaultQueue";
 			defaultQueue = (Queue) ctx.lookup(admDestName);
+			String admResponseName = "jms/simpleAppResponseQueue";
+			responseQueue = (Queue) ctx.lookup(admResponseName);
+			String admRequestName = "jms/simpleAppRequestQueue";
+			requestQueue = (Queue) ctx.lookup(admRequestName);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -28,6 +34,14 @@ public class JMSResources {
 
 	public Queue getDefaultQueue() {
 		return defaultQueue;
-	}		
+	}
+	
+	public Queue getRequestQueue() {
+		return requestQueue;
+	}
+	
+	public Queue getResponseQueue() {
+		return responseQueue;
+	}
 
 }

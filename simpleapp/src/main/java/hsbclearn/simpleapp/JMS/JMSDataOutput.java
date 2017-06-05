@@ -1,7 +1,4 @@
-/**
- * 
- */
-package hsbclearn.simpleapp.examples;
+package hsbclearn.simpleapp.JMS;
 
 import java.util.List;
 
@@ -41,15 +38,15 @@ public class JMSDataOutput implements IDataOutput {
 			ConnectionFactory connFactory = jmsRes.getConnFactory();
 			conn = connFactory.createConnection();
 			session = conn.createSession(false, Session.AUTO_ACKNOWLEDGE);
-			MessageProducer producer = session.createProducer(jmsRes.getDefaultQueue());
+			MessageProducer producer = session.createProducer(jmsRes.getRequestQueue());
 			IMessageParser parser = new MessageParser();
 	        
 	       // conn.start();
 
 	        messageBody = parser.saveAsXML(data);
-	        System.out.println("messageBody:"+messageBody);
+	        System.out.println("JMSDataOutput::messageBody:"+messageBody);
 			Message request = session.createTextMessage(messageBody );
-			//request.setJMSReplyTo(jmsRes.getDefaultQueue());
+			request.setJMSReplyTo(jmsRes.getResponseQueue());
 		    producer.send(request,  Message.DEFAULT_DELIVERY_MODE,
                     Message.DEFAULT_PRIORITY,
                     Message.DEFAULT_TIME_TO_LIVE);

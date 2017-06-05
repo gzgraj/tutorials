@@ -1,14 +1,6 @@
 package hsbclearn.simpleapp.StAX;
 
-import java.io.FileNotFoundException;
-import java.net.URL;
 import java.util.List;
-
-import javax.xml.stream.XMLEventReader;
-import javax.xml.stream.XMLInputFactory;
-import javax.xml.stream.XMLStreamException;
-import javax.xml.stream.XMLStreamReader;
-import javax.xml.stream.events.XMLEvent;
 
 import hsbclearn.simpleapp.IDataInput;
 import hsbclearn.simpleapp.IMessageParser;

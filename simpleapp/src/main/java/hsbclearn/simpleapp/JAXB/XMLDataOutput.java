@@ -2,10 +2,7 @@ package hsbclearn.simpleapp.JAXB;
 
 import java.util.List;
 
-import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.Dependent;
-import javax.enterprise.context.RequestScoped;
-
 import hsbclearn.simpleapp.IDataOutput;
 import hsbclearn.simpleapp.IMessageParser;
 import hsbclearn.simpleapp.IntegerWrapper;

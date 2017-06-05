@@ -1,4 +1,4 @@
-package hsbclearn.simpleapp.examples;
+package hsbclearn.simpleapp.JMS;
 
 import java.util.List;
 
@@ -49,7 +49,7 @@ public class JMSDataInput implements IDataInput {
 			ConnectionFactory connFactory = jmsRes.getConnFactory();
 			conn = connFactory.createConnection();
 			session = conn.createSession(false, Session.AUTO_ACKNOWLEDGE);
-			consumer = session.createConsumer(jmsRes.getDefaultQueue());
+			consumer = session.createConsumer(jmsRes.getResponseQueue());
 			conn.start();
 			response = (TextMessage) consumer.receive();
 			responseMsg = ((TextMessage) response).getText();
