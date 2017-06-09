@@ -1,11 +1,13 @@
 package hsbclearn.simpleapp.JMS;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.Dependent;
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.inject.Produces;
+import javax.inject.Inject;
 import javax.jms.Connection;
 import javax.jms.ConnectionFactory;
 import javax.jms.JMSException;
@@ -30,7 +32,6 @@ public class JMSDataInput implements IDataInput {
 	JMSResources jmsRes;
 	Connection conn;
 	Session  session;	
-	
 	JMSDataInput() {  jmsRes = new JMSResources(); jmsRes.init(); }
 	
 	@Override
@@ -41,32 +42,99 @@ public class JMSDataInput implements IDataInput {
 	}
 	@Override
 	public String getDataAsString() {
-		MessageConsumer consumer;
+		MessageConsumer consumer = null;
 		String responseMsg = null;
-		TextMessage response = null;
+		String resultXML = null;
+		Message response = null;
+		
+		
+		List <IntegerWrapper> tmpresult = new ArrayList<IntegerWrapper>();
+		
+		ConnectionFactory connFactory = jmsRes.getConnFactory();
+		try {
+			conn = connFactory.createConnection();
+		} catch (JMSException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
+		try {
+			session = conn.createSession(true, Session.AUTO_ACKNOWLEDGE);
+		} catch (JMSException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
 		try {
 			
-			ConnectionFactory connFactory = jmsRes.getConnFactory();
-			conn = connFactory.createConnection();
-			session = conn.createSession(false, Session.AUTO_ACKNOWLEDGE);
+			
 			consumer = session.createConsumer(jmsRes.getResponseQueue());
+			
 			conn.start();
-			response = (TextMessage) consumer.receive();
-			responseMsg = ((TextMessage) response).getText();
 			
-			System.out.println("getDataAsString: "+responseMsg);
+			while  (true) {
+				response = (TextMessage) consumer.receive();
+				if (response == null) {
+					System.out.println("JMSDataInput response == null!");
+					break;
+				}
+
+				if (!CorrelationData.isOurMessage(response.getJMSCorrelationID())) {
+					System.out.println("JMSDataInput Nie mój ci On!");
+					continue;
+				}
+				else
+					System.out.println("JMSDataInput Mój ci On!");;
+					
+				responseMsg = ((TextMessage) response).getText();
+				System.out.println("response->getDataAsString:["+responseMsg+"]");
+				if (responseMsg.equals("11") && !response.getJMSRedelivered()) {
+					System.out.println("Jeden JMSDataInput testowy rollback");
+					try {
+						session.rollback();
+					} catch (JMSException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
+				}
+				//bb = ((BytesMessage)response).readInt();
+				tmpresult.add(new IntegerWrapper(Integer.valueOf(responseMsg)));
+			}
+			System.out.println("przed commit");
+			session.commit();
+			System.out.println("po commit");
+			IMessageParser parser = new MessageParser();
 			
-			session.close();
-			conn.close();
-			consumer.close();
+			resultXML = parser.saveAsXML(tmpresult);
+			
 		} 
 		catch (JMSException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			try {
+				session.rollback();
+			} catch (JMSException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+		finally {
+			try {
+				session.close();
+			} catch (JMSException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			try {
+				conn.close();
+			} catch (JMSException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		
+		System.out.println("JMSDataInput::resultXML"+resultXML);
 				
-		return responseMsg;
+		return resultXML;
 		
 	}
 

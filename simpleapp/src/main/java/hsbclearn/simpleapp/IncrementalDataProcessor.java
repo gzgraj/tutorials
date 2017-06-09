@@ -2,8 +2,15 @@ package hsbclearn.simpleapp;
 
 import java.util.List;
 
+import javax.enterprise.context.Dependent;
 import javax.enterprise.context.RequestScoped;
-@RequestScoped
+import javax.enterprise.inject.Default;
+
+import hsbclearn.simpleapp.JAXB.XmlInputOutput;
+import hsbclearn.simpleapp.JMS.JmsInputOutput;
+//@RequestScoped
+@IncDP
+@Dependent
 public class IncrementalDataProcessor implements IDataProcessor {
 
 	@Override

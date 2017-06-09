@@ -8,14 +8,19 @@ import javax.jms.Message;
 import javax.ejb.MessageDriven;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
+import javax.inject.Inject;
 
 import java.util.List;
 
+import javax.annotation.PreDestroy;
+import javax.annotation.Resource;
 import javax.ejb.ActivationConfigProperty;
+import javax.ejb.EJBContext;
 import javax.jms.MessageListener;
 import javax.jms.MessageProducer;
 import javax.jms.Session;
 import javax.jms.TextMessage;
+import javax.transaction.TransactionManager;
 
 import hsbclearn.simpleapp.IMessageParser;
 import hsbclearn.simpleapp.IntegerWrapper;
@@ -26,7 +31,7 @@ import hsbclearn.simpleapp.resources.JMSResources;
  * @author gzgraj
  *
  */
-@TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+
 @MessageDriven(                                     // Message-driven bean (MDB)
 		activationConfig = { @ActivationConfigProperty(   // activation configuration (more)
 								propertyName = "destinationType", 
@@ -40,18 +45,27 @@ import hsbclearn.simpleapp.resources.JMSResources;
 								
 							) 
 		})
-
+@TransactionAttribute(TransactionAttributeType.REQUIRED)
 public class AsyncJMSMDB implements MessageListener {
-	public void onMessage(Message message) {          
+	//@Inject
+	//EJBContext  tm;
+	public void onMessage(Message message) {  
+	System.out.println("AsyncJMSMDB::OnMessage"); 	
 	TextMessage textMsg = (TextMessage) message;
-	try {
-	  System.out.println("AsyncJMSMDB::Komunikat: " + textMsg.getText());
-	 
+	if (message instanceof TextMessage) {
+		try {
+		  System.out.println("AsyncJMSMDB::Komunikat: " + textMsg.getText());
+		  sendMessage( message );
+		}
+		catch (JMSException e) {
+		  System.out.println("Błąd pobierania komunikatu");
+		  // tm.setRollbackOnly(); // to raczej niepotrzebne bo wyjątek
+		}
+	} 
+	else {
+		System.out.println("Błąd pobierania komunikatu");
 	}
-	catch (JMSException e) {
-	  System.out.println("Błąd pobierania komunikatu");
-	    }
-	  }
+}
 	private String getName() {
 		// TODO Auto-generated method stub
 		return null;
@@ -62,8 +76,8 @@ public class AsyncJMSMDB implements MessageListener {
 	
 	public void sendMessage(Message message)  {
 		JMSResources jmsRes = new JMSResources();
-		Connection conn;
-		Session  session;	
+		Connection conn = null;
+		Session  session = null;;	
 		String messageBody;
 		jmsRes.init(); 
 		try {
@@ -71,14 +85,22 @@ public class AsyncJMSMDB implements MessageListener {
 			conn = connFactory.createConnection();
 			session = conn.createSession(false, Session.AUTO_ACKNOWLEDGE);
 			Destination destination =  message.getJMSReplyTo();
-			MessageProducer producer = session.createProducer(destination);
-			IMessageParser parser = new MessageParser();
+			MessageProducer producer = null;
+			if (destination == null) {
+				System.out.println("destination == null");
+				destination = jmsRes.getResponseQueue();
+			}
+			
+			producer = session.createProducer(destination);
 	        
 			Message request = session.createTextMessage(((TextMessage) message).getText() );
+			if (destination != null)
+				System.out.println("AsyncJMSMDB::Wysyłam destitantion -> " + destination.toString() +" komunikat :"+ ((TextMessage)message).getText());
+			request.setJMSCorrelationID(message.getJMSCorrelationID());
 		    producer.send(request,  Message.DEFAULT_DELIVERY_MODE,
                     Message.DEFAULT_PRIORITY,
                     Message.DEFAULT_TIME_TO_LIVE);
-		    System.out.println("AsyncJMSMDB::Wysyłam: " + ((TextMessage)message).getText());
+		    
 		    session.close();
 			conn.close();
 			producer.close();
@@ -87,15 +109,20 @@ public class AsyncJMSMDB implements MessageListener {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-	
-		
-
-		//conn.createConnection().
-		
+		finally {
+			try {
+				session.close();
+			} catch (JMSException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			try {
+				conn.close();
+			} catch (JMSException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 
-
-	
-	
 }

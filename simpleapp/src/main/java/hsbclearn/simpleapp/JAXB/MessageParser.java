@@ -30,6 +30,7 @@ public class MessageParser implements IMessageParser {
 		numbers.setList(inList);
 		
 		JAXBContext context;
+		System.out.println("saveAsXML...");
 		try {
 			context = JAXBContext.newInstance(XMLMessage.class);
 			Marshaller m = context.createMarshaller();

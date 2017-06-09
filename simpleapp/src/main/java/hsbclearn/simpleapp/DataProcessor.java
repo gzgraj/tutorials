@@ -9,9 +9,13 @@ import java.util.Collection;
 import java.util.List;
 import java.util.TreeSet;
 
+import javax.enterprise.context.Dependent;
+
 import hsbclearn.simpleapp.IDataProcessor;
 import hsbclearn.simpleapp.IntegerWrapper;
+import hsbclearn.simpleapp.JAXB.XmlInputOutput;
 
+//@Dependent
 public class DataProcessor implements IDataProcessor {
 
 	@Override
