@@ -3,6 +3,9 @@ package hsbclearn.simpleapp.examples;
 import java.io.IOException;
 import java.util.List;
 
+import javax.ejb.EJB;
+import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.inject.Instance;
 import javax.inject.Inject;
 import javax.jms.JMSException;
 import javax.servlet.ServletException;
@@ -14,11 +17,14 @@ import hsbclearn.simpleapp.XMLProcessController;
 //import example.cdi.app.GUIContoller;
 
 
-
-@WebServlet("/ExampleServlet")
+//@ApplicationScoped
+@WebServlet("/ExampleServlet2")
 public class ExampleServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
+	
+	//XMLProcessController executor = new XMLProcessController();
+	
 	@Inject
 	XMLProcessController executor;
 	public ExampleServlet() {
